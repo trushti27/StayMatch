@@ -44,8 +44,8 @@ StayMatch aims to solve these problems by providing:
 
 ### Database
 
-- PostgreSQL
-- Prisma ORM
+- MongoDB Atlas
+- Mongoose ODM
 
 ### Authentication
 
