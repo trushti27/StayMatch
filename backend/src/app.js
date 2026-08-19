@@ -6,7 +6,8 @@ const morgan = require("morgan");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const profileRoutes = require("./routes/profileRoutes");
-
+const lciRoutes = require("./routes/lciRoutes");
+const propertyRoutes = require("./routes/propertyRoutes");
 
 const errorHandler = require("./middleware/errorMiddleware");
 
@@ -35,6 +36,7 @@ app.use(express.urlencoded({
 app.use(morgan("dev"));
 
 
+
 // ===============================
 // HEALTH CHECK
 // ===============================
@@ -60,9 +62,22 @@ app.use(
     "/api/v1/users",
     userRoutes
 );
+
 app.use(
     "/api/v1/profiles",
-     profileRoutes
+    profileRoutes
+);
+
+app.use(
+    "/api/v1/lci",
+    lciRoutes
+
+);
+
+
+app.use(
+    "/api/v1/properties",
+    propertyRoutes
 );
 
 // ===============================

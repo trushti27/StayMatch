@@ -5,7 +5,7 @@ const {
     getMyProfile,
     getPotentialRoommates
 } = require("../controllers/profileController");
-const { protect, authorize } = require("../middlewares/authMiddleware");
+const { protect, authorize } = require("../middleware/authMiddleware");
 
 // Restrict these operations to students
 router.use(protect);
