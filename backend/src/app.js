@@ -5,6 +5,8 @@ const morgan = require("morgan");
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+
 
 const errorHandler = require("./middleware/errorMiddleware");
 
@@ -58,7 +60,10 @@ app.use(
     "/api/v1/users",
     userRoutes
 );
-
+app.use(
+    "/api/v1/profiles",
+     profileRoutes
+);
 
 // ===============================
 // 404
