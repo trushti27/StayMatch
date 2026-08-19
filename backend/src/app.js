@@ -5,6 +5,8 @@ const morgan = require("morgan");
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const lciRoutes = require("./routes/lciRoutes");
+
 
 const errorHandler = require("./middleware/errorMiddleware");
 
@@ -59,6 +61,10 @@ app.use(
     userRoutes
 );
 
+app.use(
+    "/api/v1/lci",
+    lciRoutes
+);
 
 // ===============================
 // 404
