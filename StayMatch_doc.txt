@@ -1,0 +1,127 @@
+2. Pages
+**Public Pages
+Home
+Login
+Register
+About
+Contact
+
+**Student Pages
+Dashboard
+Profile
+Edit Profile
+Property Listings
+Property Details
+Favorites
+Questionnaire
+Recommended Roommates
+Chat
+Notifications (Optional)
+
+**Owner Pages
+Owner Dashboard
+Add Listing
+My Listings
+Edit Listing
+Booking/Inquiry Management (Optional)
+
+**Admin Pages
+Admin Dashboard
+User Management
+Listing Management
+Review Management
+
+
+4. API List (Version 1)
+Authentication
+| Method | Endpoint             |
+| ------ | -------------------- |
+| POST   | `/api/auth/register` |
+| POST   | `/api/auth/login`    |
+| GET    | `/api/auth/profile`  |
+
+| Method | Endpoint         |
+| ------ | ---------------- |
+| GET    | `/api/users/:id` |
+| PUT    | `/api/users/:id` |
+
+| Method | Endpoint            |
+| ------ | ------------------- |
+| GET    | `/api/listings`     |
+| GET    | `/api/listings/:id` |
+| POST   | `/api/listings`     |
+| PUT    | `/api/listings/:id` |
+| DELETE | `/api/listings/:id` |
+
+| Method | Endpoint                    |
+| ------ | --------------------------- |
+| POST   | `/api/favorites/:listingId` |
+| DELETE | `/api/favorites/:listingId` |
+| GET    | `/api/favorites`            |
+
+| Method | Endpoint                  |
+| ------ | ------------------------- |
+| POST   | `/api/reviews`            |
+| GET    | `/api/reviews/:listingId` |
+
+| Method | Endpoint                |
+| ------ | ----------------------- |
+| POST   | `/api/questionnaire`    |
+| GET    | `/api/questionnaire/me` |
+| PUT    | `/api/questionnaire`    |
+
+| Method | Endpoint           |
+| ------ | ------------------ |
+| GET    | `/api/lci/matches` |
+| GET    | `/api/lci/:userId` |
+
+| Method | Endpoint                      |
+| ------ | ----------------------------- |
+| GET    | `/api/chats`                  |
+| GET    | `/api/chats/:chatId/messages` |
+
+5. Database Collections
+users
+Stores:
+Student
+Property Owner
+Admin
+
+listings
+Stores:
+PG
+Hostel
+Flat
+Property Images
+Owner Information
+
+questionnaires
+Stores:
+Lifestyle Answers
+Habits
+Preferences
+
+chats
+Stores:
+Chat Participants
+Last Message
+Last Activity
+
+messages
+Stores:
+Sender
+Receiver
+Message Content
+Timestamp
+
+reviews
+Stores:
+Rating
+Review Text
+Reviewer
+Listing
+
+favorites
+Stores:
+User
+Saved Listings
