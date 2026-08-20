@@ -26,7 +26,7 @@ StayMatch aims to solve these problems by providing:
 | ------- | ------------------ |
 | Krishna | Backend & Database |
 | Madhavi | Frontend & UI      |
-| Trushti | LCI & Integration  |
+| Trushti | LCI & Chat Module  |
 
 ---
 
@@ -63,7 +63,6 @@ StayMatch aims to solve these problems by providing:
 
 - Vercel
 - Render
-- Neon PostgreSQL
 
 ---
 
