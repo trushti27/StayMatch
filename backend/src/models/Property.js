@@ -189,6 +189,33 @@ const propertySchema = new mongoose.Schema(
         // ===============================
         // VERIFICATION
         // ===============================
+        verificationDocument: {
+            documentType: {
+                type: String,
+                enum: [
+                    "Electricity bill",
+                    "Property tax receipt",
+                    "Rent/lease agreement",
+                    "Property ownership document",
+                    "Property authorization/management document",
+                    "Other"
+                ],
+                default: "Property ownership document"
+            },
+            documentName: {
+                type: String,
+                trim: true
+            },
+            fileUrl: {
+                type: String,
+                trim: true
+            },
+            uploadedAt: {
+                type: Date,
+                default: Date.now
+            }
+        },
+
         verificationStatus: {
             type: String,
             enum: [
@@ -198,6 +225,13 @@ const propertySchema = new mongoose.Schema(
             ],
             default: "pending",
             index: true
+        },
+
+        rejectionReason: {
+            type: String,
+            trim: true,
+            maxlength: 500,
+            default: null
         },
 
         // ===============================
@@ -220,20 +254,15 @@ const propertySchema = new mongoose.Schema(
 // Available rooms cannot exceed total rooms
 // =====================================
 
-propertySchema.pre("validate", function (next) {
+propertySchema.pre("validate", function () {
     if (
         this.accommodation &&
         this.accommodation.availableRooms >
         this.accommodation.totalRooms
     ) {
-        return next(
-            new Error(
-                "Available rooms cannot exceed total rooms"
-            )
-        );
+        throw new Error("Available rooms cannot exceed total rooms");
     }
 
-    next();
 });
 
 

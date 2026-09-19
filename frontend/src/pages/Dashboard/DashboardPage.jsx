@@ -1,17 +1,26 @@
-const DashboardPage = () => {
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900">
-          Welcome to StayMatch
-        </h1>
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-        <p className="text-gray-600 mt-2">
-          Student Dashboard
-        </p>
-      </div>
-    </div>
-  );
-};
+export default function DashboardPage() {
+  const token = localStorage.getItem("staymatch_token");
+  const storedUser = localStorage.getItem("staymatch_user");
 
-export default DashboardPage;
+  if (!token || !storedUser) {
+    return <Navigate to="/login" replace />;
+  }
+
+  try {
+    const user = JSON.parse(storedUser);
+    if (user.role === "admin") {
+      return <Navigate to="/admin/dashboard" replace />;
+    }
+    if (user.role === "owner") {
+      return <Navigate to="/owner/dashboard" replace />;
+    }
+    return <Navigate to="/student/dashboard" replace />;
+  } catch {
+    localStorage.removeItem("staymatch_token");
+    localStorage.removeItem("staymatch_user");
+    return <Navigate to="/login" replace />;
+  }
+}

@@ -1,4 +1,5 @@
 const CompatibilityProfile = require("../models/CompatibilityProfile");
+const User = require("../models/User");
 
 // ===============================
 // CREATE OR UPDATE PROFILE (UPSERT)
@@ -7,11 +8,35 @@ const upsertProfile = async (req, res, next) => {
     try {
         const userId = req.user._id;
 
+        // Backend validation for Monthly Budget
+        if (req.body.budget) {
+            const min = Number(req.body.budget.min);
+            const max = Number(req.body.budget.max);
+
+            if (isNaN(min) || min < 500) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Minimum monthly budget must be at least ₹500"
+                });
+            }
+
+            if (isNaN(max) || min >= max) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Minimum monthly budget must be strictly less than maximum budget"
+                });
+            }
+        }
+
         const profile = await CompatibilityProfile.findOneAndUpdate(
             { user: userId },
             { $set: { ...req.body, user: userId } },
             { new: true, upsert: true, runValidators: true }
         );
+
+        if (req.body.preferredLocations && req.body.preferredLocations.length > 0 && req.body.preferredLocations[0]) {
+            await User.findByIdAndUpdate(userId, { $set: { city: req.body.preferredLocations[0] } });
+        }
 
         res.status(200).json({
             success: true,

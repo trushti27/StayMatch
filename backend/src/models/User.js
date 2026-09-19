@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema(
             enum: ["student", "owner", "admin"],
             default: "student"
         },
+        gender: { type: String, enum: ["male", "female", "other"], default: "other" },
 
         profileImage: {
             type: String,
@@ -59,6 +60,14 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: true
         }
+        ,college: { type: String, trim: true },
+        course: { type: String, trim: true },
+        graduationYear: { type: Number },
+        city: { type: String, trim: true },
+        bio: { type: String, maxlength: 500, trim: true },
+        businessName: { type: String, trim: true },
+        verificationStatus: { type: String, enum: ["unsubmitted", "pending", "verified", "rejected"], default: "unsubmitted" },
+        verificationNote: { type: String, maxlength: 500, trim: true }
     },
     {
         timestamps: true

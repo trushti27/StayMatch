@@ -12,6 +12,7 @@ router.use(protect);
 router.use(authorize("student", "admin"));
 
 router.put("/", upsertProfile);
+router.post("/", upsertProfile);
 router.get("/me", getMyProfile);
 router.get("/candidates", getPotentialRoommates);
 

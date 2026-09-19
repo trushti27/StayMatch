@@ -1,3 +1,19 @@
+/*
+Student A
+    ↓
+Collect candidate students
+    ↓
+Calculate compatibility
+    ↓
+Apply minimum threshold (50%)
+    ↓
+Sort by score
+    ↓
+Recommended roommates
+
+*/
+
+
 const {
     rankCompatibleRoommates
 } = require("./lci.engine");
@@ -143,12 +159,11 @@ rankedMatches.forEach(
     (match, index) => {
 
         console.log(
-            `${index + 1}. ${match.name} - ${match.compatibilityScore}%`
+        `${index + 1}. ${match.name} - ${match.compatibilityScore}% - ${match.compatibilityLevel}`
         );
-
-        console.log(
-            `   Matches: ${match.matchedFactors.join(", ")}`
-        );
+       // console.log(
+         //   `   Matches: ${match.matchedFactors.join(", ")}`
+        //);
 
         console.log(
             `   Conflicts: ${

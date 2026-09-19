@@ -11,7 +11,7 @@ const LCI_WEIGHTS = {
     nightCalls: 5,
     windowPreference: 10
 };
-
+const MIN_COMPATIBILITY_SCORE = 50;
 
 function compareValues(valueA, valueB) {
     if (!valueA || !valueB) return 0;
@@ -267,7 +267,22 @@ function calculateCompatibility(studentA, studentB) {
     };
 }
 
+function getCompatibilityLevel(score) {
 
+    if (score >= 85) {
+        return "Highly Compatible";
+    }
+
+    if (score >= 70) {
+        return "Compatible";
+    }
+
+    if (score >= 50) {
+        return "Moderately Compatible";
+    }
+
+    return "Low Compatibility";
+}
 function rankCompatibleRoommates(targetStudent, students) {
 
     const results = [];
@@ -284,13 +299,32 @@ function rankCompatibleRoommates(targetStudent, students) {
             student
         );
 
-        results.push({
-            studentId: student.id,
-            name: student.name,
-            compatibilityScore: result.compatibilityScore,
-            matchedFactors: result.matchedFactors,
-            potentialConflicts: result.potentialConflicts
-        });
+        // Only recommend students above
+        // the minimum compatibility threshold
+        if (
+            result.compatibilityScore >=
+            MIN_COMPATIBILITY_SCORE
+        ) {
+
+            results.push({
+                studentId: student.id,
+                name: student.name,
+
+                compatibilityScore:
+                    result.compatibilityScore,
+
+                compatibilityLevel:
+                    getCompatibilityLevel(
+                        result.compatibilityScore
+                    ),
+
+                matchedFactors:
+                    result.matchedFactors,
+
+                potentialConflicts:
+                    result.potentialConflicts
+            });
+        }
     }
 
     // Highest compatibility first
@@ -302,7 +336,6 @@ function rankCompatibleRoommates(targetStudent, students) {
 
     return results;
 }
-
 module.exports = {
     calculateCompatibility,
     rankCompatibleRoommates

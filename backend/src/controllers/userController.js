@@ -1,5 +1,5 @@
 const User = require("../models/User");
-
+const CompatibilityProfile = require("../models/CompatibilityProfile");
 
 // GET CURRENT USER
 const getMe = async (req, res, next) => {
@@ -18,6 +18,14 @@ const getMe = async (req, res, next) => {
                     phone: user.phone,
                     role: user.role,
                     profileImage: user.profileImage,
+                    college: user.college,
+                    course: user.course,
+                    graduationYear: user.graduationYear,
+                    city: user.city,
+                    bio: user.bio,
+                    businessName: user.businessName,
+                    verificationStatus: user.verificationStatus,
+                    verificationNote: user.verificationNote,
                     isVerified: user.isVerified,
                     isActive: user.isActive,
                     createdAt: user.createdAt,
@@ -39,7 +47,7 @@ const updateMe = async (req, res, next) => {
             "firstName",
             "lastName",
             "phone",
-            "profileImage"
+            "profileImage", "college", "course", "graduationYear", "city", "bio", "businessName", "verificationNote", "gender"
         ];
 
         const updates = {};
@@ -49,6 +57,9 @@ const updateMe = async (req, res, next) => {
                 updates[field] = req.body[field];
             }
         });
+        if (req.user.role === "owner" && req.body.verificationNote) {
+            updates.verificationStatus = "pending";
+        }
 
         const user = await User.findByIdAndUpdate(
             req.user._id,
@@ -58,6 +69,14 @@ const updateMe = async (req, res, next) => {
                 runValidators: true
             }
         );
+
+        // If city is updated, sync CompatibilityProfile's preferredLocations
+        if (updates.city) {
+            await CompatibilityProfile.findOneAndUpdate(
+                { user: req.user._id },
+                { $set: { preferredLocations: [updates.city] } }
+            );
+        }
 
         res.status(200).json({
             success: true,

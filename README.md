@@ -1,109 +1,33 @@
-# StayMatch 🏠🤝
+# StayMatch
 
-A student housing and roommate compatibility decision support platform.
+StayMatch is a student housing and roommate compatibility platform built with React, Express, MongoDB, JWT and Socket.IO. It supports student matching, approved property discovery, persistent favorites, reviews, connection requests, real-time-capable chats, owner listings, and administrator verification workflows.
 
-## 📌 Project Overview
+## Run locally
 
-StayMatch helps students discover verified PGs and rental accommodations, find compatible roommates using a Living Compatibility Index (LCI), and make informed housing decisions through personalized recommendations and verified reviews.
+1. Create `backend/.env` from `backend/.env.example` and set `MONGODB_URI` and a secure `JWT_SECRET`.
+2. In `backend`, run `npm install`, then `npm run seed` (optional demo data), then `npm run dev`.
+3. In `frontend`, run `npm install`, then `npm run dev`.
 
-## 🎯 Problem Statement
+The frontend uses `http://localhost:5000/api/v1` by default. Set `VITE_API_BASE_URL` to override it.
 
-Students moving to a new city often struggle to find safe accommodation and compatible roommates. Existing platforms mainly focus on property listings and do not provide student-centric recommendations or compatibility analysis.
+## Demo accounts
 
-StayMatch aims to solve these problems by providing:
+All seeded accounts use password `DemoPass123!`:
 
-- Verified accommodation listings
-- Roommate compatibility matching
-- Personalized recommendations
-- Reviews and ratings
-- Real-time communication
+- `student1@staymatch.demo` through `student5@staymatch.demo`
+- `owner1@staymatch.demo`, `owner2@staymatch.demo`
+- `admin@staymatch.demo`
 
----
+## API groups
 
-## 👥 Team Members
+- `/api/v1/auth` — registration and login
+- `/api/v1/users`, `/api/v1/profiles`, `/api/v1/lci` — profile and compatibility workflow
+- `/api/v1/properties`, `/api/v1/favorites`, `/api/v1/reviews` — approved housing discovery and saved homes
+- `/api/v1/connections`, `/api/v1/chats` — accepted connections and persistent messages
+- `/api/v1/reports`, `/api/v1/admin` — moderation and administration
 
-| Name    | Role               |
-| ------- | ------------------ |
-| Krishna | Backend & Database |
-| Madhavi | Frontend & UI      |
-| Trushti | LCI & Chat Module  |
+The LCI engine at `backend/src/modules/lci/lci.engine.js` is the single authoritative matching implementation. Stored questionnaire values are normalized there before scoring, and responses explain scores with matched factors and potential conflicts.
 
----
+## Notes
 
-## 🚀 Tech Stack
-
-### Frontend
-
-- React.js
-- Tailwind CSS
-
-### Backend
-
-- Node.js
-- Express.js
-
-### Database
-
-- MongoDB Atlas
-- Mongoose ODM
-
-### Authentication
-
-- JWT
-- BCrypt
-
-### Additional Tools
-
-- Socket.IO
-- Cloudinary
-- OpenStreetMap + Leaflet
-- Git & GitHub
-
-### Deployment
-
-- Vercel
-- Render
-
----
-
-## ✨ Core Features
-
-- Student Authentication & Profiles
-- Owner Authentication & Profiles
-- PG and Rental Listings
-- Search & Filters
-- Living Compatibility Index (LCI)
-- Roommate Matching
-- Personalized Recommendations
-- Reviews & Ratings
-- Favorites and Comparison
-- Real-time Chat
-- Admin Dashboard
-
----
-
-## 📂 Project Structure
-
-```text
-StayMatch/
-│
-├── backend/
-├── frontend/
-├── docs/
-├── diagrams/
-├── screenshots/
-└── README.md
-```
-
----
-
-## 📅 Project Timeline
-
-- Phase 1: Requirements & Planning
-- Phase 2: System Design
-- Phase 3: Development
-- Phase 4: Testing
-- Phase 5: Deployment
-- Phase 6: Documentation & Presentation
-
----
+Property and owner verification are intentional admin-reviewed workflows. Cloudinary variables are available for future upload configuration; no credentials are stored in the repository.

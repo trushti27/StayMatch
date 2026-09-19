@@ -48,7 +48,7 @@ const compatibilityProfileSchema = new mongoose.Schema(
         },
         dietaryPreference: {
             type: String,
-            enum: ["vegetarian", "non_vegetarian", "vegan", "eggetarian", "no_preference"],
+            enum: ["vegetarian", "non_vegetarian", "vegan", "eggetarian", "jain", "no_preference"],
             required: true
         },
         smoking: {
@@ -56,9 +56,13 @@ const compatibilityProfileSchema = new mongoose.Schema(
             required: true
         },
         drinking: {
-            type: Boolean,
+            type: String,
+            enum: ["no", "occasionally", "yes"],
             required: true
         },
+        noisePreference: { type: String, enum: ["quiet", "moderate", "lively", "flexible"], default: "moderate" },
+        nightCalls: { type: String, enum: ["no", "occasionally", "yes"], default: "no" },
+        windowPreference: { type: String, enum: ["open", "closed", "flexible"], default: "flexible" },
         petFriendly: {
             type: Boolean,
             default: false
@@ -69,7 +73,7 @@ const compatibilityProfileSchema = new mongoose.Schema(
             min: {
                 type: Number,
                 required: true,
-                min: 0
+                min: [500, "Minimum budget must be at least ₹500"]
             },
             max: {
                 type: Number,
